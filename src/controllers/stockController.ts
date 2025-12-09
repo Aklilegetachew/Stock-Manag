@@ -36,6 +36,25 @@ export class StockController {
     }
   }
 
+  static async sellStock(req: Request, res: Response) {
+    try {
+      const { branchId, productId, quantity, TransactionNumber } = req.body
+      const remark = "SELL"
+      const stock = await StockService.sellStock(
+        branchId,
+        productId,
+        quantity,
+        remark,
+        TransactionNumber
+      )
+      res.json(stock)
+    } catch (err: any) {
+      res
+        .status(500)
+        .json({ message: "Error selling stock", error: err.message })
+    }
+  }
+
   static async getStock(req: Request, res: Response) {
     try {
       const { branchId } = req.params
@@ -56,6 +75,32 @@ export class StockController {
       res
         .status(500)
         .json({ message: "Error fetching stock", error: err.message })
+    }
+  }
+
+  static async getStockMovements(req: Request, res: Response) {
+    try {
+      const { branchId, productId } = req.params
+      const stock = await StockService.getStockMovements(
+        Number(branchId),
+        Number(productId)
+      )
+      res.json(stock)
+    } catch (err: any) {
+      res
+        .status(500)
+        .json({ message: "Error fetching stock movements", error: err.message })
+    }
+  }
+
+  static async getStockAlert(req: Request, res: Response) {
+    try {
+      const stock = await StockService.getStockAlert()
+      res.json(stock)
+    } catch (err: any) {
+      res
+        .status(500)
+        .json({ message: "Error fetching stock alert", error: err.message })
     }
   }
 }

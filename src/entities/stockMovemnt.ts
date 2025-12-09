@@ -34,4 +34,7 @@ export class StockMovemnt {
 
   @CreateDateColumn()
   createdAt!: Date
+
+  @Column({ nullable: true })
+  TransactionNumber?: string // optional note
 }
