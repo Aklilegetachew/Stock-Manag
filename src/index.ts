@@ -5,6 +5,7 @@ import { AppDataSource } from "./data-source"
 import branchRoutes from "./routes/branchRoutes"
 import stockRoutes from "./routes/stockRoutes"
 import productRoutes from "./routes/productRoutes"
+import dashboardRoutes from "./routes/dashboardRoutes"
 dotenv.config()
 
 const app = express()
@@ -24,6 +25,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/branches", branchRoutes)
 app.use("/stock", stockRoutes)
 app.use("/products", productRoutes)
+app.use("/dashboard", dashboardRoutes)
 
 AppDataSource.initialize()
   .then(() => {

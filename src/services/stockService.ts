@@ -142,7 +142,7 @@ export class StockService {
     try {
       return stockRepo.find({
         where: {
-          quantity: LessThanOrEqual(200),
+          quantity: LessThanOrEqual(40),
         },
         relations: ["branch", "product"],
       })
