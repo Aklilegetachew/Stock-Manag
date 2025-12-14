@@ -26,6 +26,7 @@ app.use("/branches", branchRoutes)
 app.use("/stock", stockRoutes)
 app.use("/products", productRoutes)
 app.use("/dashboard", dashboardRoutes)
+app.use("/delivery", deliverNotifyer)
 
 AppDataSource.initialize()
   .then(() => {
