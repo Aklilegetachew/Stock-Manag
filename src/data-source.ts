@@ -7,6 +7,8 @@ import { Branches } from "./entities/branches"
 import { Deliveryproducts } from "./entities/Deliveryproducts"
 import { DeliveryStock } from "./entities/deliveryStock"
 import { StockMovemnt } from "./entities/stockMovemnt"
+import { DeliveryOnTransit } from "./entities/DeliveryOnTransit"
+import { DeliveryCart } from "./entities/DeliveryCart"
 
 dotenv.config()
 
@@ -19,7 +21,14 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || "tomocabot",
   synchronize: true, // only for dev; auto creates tables
   logging: false,
-  entities: [Branches, Deliveryproducts, DeliveryStock, StockMovemnt],
+  entities: [
+    Branches,
+    Deliveryproducts,
+    DeliveryStock,
+    StockMovemnt,
+    DeliveryOnTransit,
+    DeliveryCart,
+  ],
   migrations: [],
   subscribers: [],
 })

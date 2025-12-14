@@ -1,46 +1,60 @@
-
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    CreateDateColumn,
-} from "typeorm";
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  OneToMany,
+} from "typeorm"
+import { DeliveryCart } from "./DeliveryCart"
 
 export enum DeliveryStatus {
-    ON_THE_WAY = "IN_TRANSIT",
-    COMPLETED = "COMPLETED",
+  IN_TRANSIT = "IN_TRANSIT",
+  COMPLETED = "COMPLETED",
 }
 
 @Entity("delivery_on_transit")
 export class DeliveryOnTransit {
-    @PrimaryGeneratedColumn()
-    id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number
 
-    @Column()
-    userName!: string;
+  @Column()
+  userName!: string
 
-    @Column()
-    userTelegramId!: string;
+  @Column()
+  phoneNumber!: string
 
-    @Column("decimal", { precision: 10, scale: 7 })
-    longitude!: number;
+  @Column()
+  address!: string
 
-    @Column("decimal", { precision: 10, scale: 7 })
-    latitude!: number;
+  @Column()
+  userTelegramId!: string
 
-    @Column()
-    cartId!: string;
+  @Column("decimal", { precision: 10, scale: 7 })
+  longitude!: number
 
-    @CreateDateColumn()
-    createdAt!: Date;
+  @Column("decimal", { precision: 10, scale: 7 })
+  latitude!: number
 
-    @Column({
-        type: "enum",
-        enum: DeliveryStatus,
-        default: DeliveryStatus.ON_THE_WAY,
-    })
-    status!: DeliveryStatus;
+  @Column()
+  transactionNumber!: string
 
-    @Column({ type: "timestamp", nullable: true })
-    completedAt?: Date | null;
+  @Column("decimal", { precision: 10, scale: 2 })
+  totalPayment!: number
+
+  @CreateDateColumn()
+  createdAt!: Date
+
+  @Column({
+    type: "enum",
+    enum: DeliveryStatus,
+    default: DeliveryStatus.IN_TRANSIT,
+  })
+  status!: DeliveryStatus
+
+  @Column({ type: "timestamp", nullable: true })
+  completedAt?: Date | null
+
+  // Relation with DeliveryCart
+  @OneToMany(() => DeliveryCart, (cart) => cart.delivery, { cascade: true })
+  carts!: DeliveryCart[]
 }
