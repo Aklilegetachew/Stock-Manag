@@ -83,7 +83,7 @@ router.get("/in-transit", async (req, res) => {
 })
 
 
-router.get("/in-transit/:id", async (req, res) => {
+router.get("/in-transit/:id/cart", async (req, res) => {
   try {
     const id = Number(req.params.id)
     const repo = AppDataSource.getRepository(DeliveryOnTransit)
@@ -117,7 +117,7 @@ router.get("/completed", async (req, res) => {
 })
 
 
-router.get("/completed/:id", async (req, res) => {
+router.get("/completed/:id/cart", async (req, res) => {
   try {
     const id = Number(req.params.id)
     const repo = AppDataSource.getRepository(DeliveryOnTransit)
