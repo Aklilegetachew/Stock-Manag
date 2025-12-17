@@ -9,6 +9,7 @@ import { DeliveryStock } from "./entities/deliveryStock"
 import { StockMovemnt } from "./entities/stockMovemnt"
 import { DeliveryOnTransit } from "./entities/DeliveryOnTransit"
 import { DeliveryCart } from "./entities/DeliveryCart"
+import { StockAdmin } from "./entities/StockAdmin"
 
 dotenv.config()
 
@@ -19,7 +20,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_NAME || "tomocabot",
-  synchronize: true, // only for dev; auto creates tables
+  synchronize: false, // only for dev; auto creates tables
   logging: false,
   entities: [
     Branches,
@@ -28,6 +29,7 @@ export const AppDataSource = new DataSource({
     StockMovemnt,
     DeliveryOnTransit,
     DeliveryCart,
+    StockAdmin,
   ],
   migrations: [],
   subscribers: [],

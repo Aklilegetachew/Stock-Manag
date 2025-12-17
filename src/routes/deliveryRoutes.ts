@@ -7,6 +7,7 @@ import {
 } from "../entities/DeliveryOnTransit"
 import { notifyAdmin } from "../admin-bot/notify-admin"
 import { DeliveryCart } from "../entities/DeliveryCart"
+import { authenticateStockAdmin } from "../middleware/authMiddleware"
 
 const router = Router()
 
@@ -67,7 +68,7 @@ router.post("/in-transit", async (req, res) => {
   }
 })
 
-router.get("/in-transit", async (req, res) => {
+router.get("/in-transit", authenticateStockAdmin, async (req, res) => {
   try {
     const repo = AppDataSource.getRepository(DeliveryOnTransit)
     const deliveries = await repo.find({
@@ -82,8 +83,7 @@ router.get("/in-transit", async (req, res) => {
   }
 })
 
-
-router.get("/in-transit/:id/cart", async (req, res) => {
+router.get("/in-transit/:id/cart", authenticateStockAdmin, async (req, res) => {
   try {
     const id = Number(req.params.id)
     const repo = AppDataSource.getRepository(DeliveryOnTransit)
@@ -100,8 +100,7 @@ router.get("/in-transit/:id/cart", async (req, res) => {
   }
 })
 
-
-router.get("/completed", async (req, res) => {
+router.get("/completed", authenticateStockAdmin, async (req, res) => {
   try {
     const repo = AppDataSource.getRepository(DeliveryOnTransit)
     const deliveries = await repo.find({
@@ -116,14 +115,14 @@ router.get("/completed", async (req, res) => {
   }
 })
 
-
-router.get("/completed/:id/cart", async (req, res) => {
+router.get("/completed/:id/cart", authenticateStockAdmin, async (req, res) => {
   try {
     const id = Number(req.params.id)
     const repo = AppDataSource.getRepository(DeliveryOnTransit)
     const delivery = await repo.findOne({
       where: { id, status: DeliveryStatus.COMPLETED },
       relations: ["carts"],
+      order: { completedAt: "DESC" },
     })
     if (!delivery)
       return res.status(404).json({ message: "Delivery not found" })

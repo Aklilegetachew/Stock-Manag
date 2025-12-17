@@ -7,9 +7,9 @@ import stockRoutes from "./routes/stockRoutes"
 import productRoutes from "./routes/productRoutes"
 import dashboardRoutes from "./routes/dashboardRoutes"
 import deliveryRoutes from "./routes/deliveryRoutes"
+import stockAdminRoutes from "./routes/stockAdminRoutes"
 import { adminBot } from "./admin-bot/bot"
-import "./admin-bot/handlers/admin-confirmation";
-
+import "./admin-bot/handlers/admin-confirmation"
 
 dotenv.config()
 
@@ -32,6 +32,7 @@ app.use("/stock", stockRoutes)
 app.use("/products", productRoutes)
 app.use("/dashboard", dashboardRoutes)
 app.use("/delivery", deliveryRoutes)
+app.use("/auth", stockAdminRoutes)
 
 AppDataSource.initialize()
   .then(() => {
@@ -40,11 +41,13 @@ AppDataSource.initialize()
       .launch()
       .then(() => console.log("🤖 Admin bot running"))
       .catch((err: any) => console.error("Bot launch error:", err))
+
+    const PORT = process.env.PORT || 8000
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`)
+    })
   })
   .catch((err) => {
     console.error("Database connection error:", err)
+    process.exit(1)
   })
-const PORT = process.env.PORT || 8000
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
-})
