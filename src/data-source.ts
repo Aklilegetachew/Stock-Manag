@@ -20,7 +20,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_NAME || "tomocabot",
-  synchronize: false, // only for dev; auto creates tables
+  synchronize: true, // only for dev; auto creates tables
   logging: false,
   entities: [
     Branches,
