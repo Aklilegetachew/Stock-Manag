@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { StockService } from "../services/stockService"
+import { StockReportService } from "../services/stockReportService"
 
 export class StockController {
   static async addStock(req: Request, res: Response) {
@@ -75,6 +76,22 @@ export class StockController {
       res
         .status(500)
         .json({ message: "Error fetching stock", error: err.message })
+    }
+  }
+
+  static async getReport(req: Request, res: Response) {
+    try {
+      const { startDate, endDate, productId, branchId } = req.query as any
+      const report = await StockReportService.getMovementReport({
+        startDate, // "2024-01-01"
+        endDate, // "2024-01-01"
+        productId: productId ? Number(productId) : undefined,
+        branchId: branchId ? Number(branchId) : undefined,
+      })
+      res.json(report)
+    } catch (error) {
+      console.error("Report error:", error)
+      res.status(500).json({ message: "Failed to generate report" })
     }
   }
 

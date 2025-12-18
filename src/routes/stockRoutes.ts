@@ -3,6 +3,11 @@ import { StockController } from "../controllers/stockController"
 import { authenticateStockAdmin } from "../middleware/authMiddleware"
 
 const router = Router()
+router.get(
+  "/report/movements",
+  authenticateStockAdmin,
+  StockController.getReport
+)
 router.get("/lowstockalerts", StockController.getStockAlert)
 router.post("/add", authenticateStockAdmin, StockController.addStock)
 router.post("/deduct", authenticateStockAdmin, StockController.deductStock)
